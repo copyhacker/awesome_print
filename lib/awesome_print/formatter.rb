@@ -39,16 +39,28 @@ module AwesomePrint
 
     # Pick the color and apply it to the given string as necessary.
     #------------------------------------------------------------------------------
-    def colorize(s, type)
-      s = CGI.escapeHTML(s) if @options[:html]
+    # def colorize(s, type)
+    #   s = CGI.escapeHTML(s) if @options[:html]
+    #   if @options[:plain] || !@options[:color][type] || !@inspector.colorize?
+    #     s
+    #   else
+    #     s.send(@options[:color][type], @options[:html])
+    #   end
+    # end
+
+    def colorize(str, type)
+      str = CGI.escapeHTML(str) if @options[:html]
       if @options[:plain] || !@options[:color][type] || !@inspector.colorize?
-        s
+        @options[:html] ? "<pre>#{s}</pre>" : str
+      elsif !@options[:html] && @options[:color] && type
+        str.send(@options[:color][type])
       else
-        s.send(@options[:color][type], @options[:html])
+        str.send(@options[:color][type], @options[:html])
       end
     end
 
-    private
+
+private
 
     # Catch all method to format an arbitrary object.
     #------------------------------------------------------------------------------
