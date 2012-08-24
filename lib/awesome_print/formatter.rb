@@ -48,7 +48,6 @@ module AwesomePrint
       end
     end
 
-
     private
 
     # Catch all method to format an arbitrary object.
